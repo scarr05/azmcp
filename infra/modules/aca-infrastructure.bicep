@@ -113,6 +113,14 @@ resource containerApp 'Microsoft.App/containerApps@2024-03-01' = {
               value: 'http://+:8080'
             }
             {
+              name: 'AZURE_TENANT_ID'
+              value: azureAdTenantId
+            }
+            {
+              name: 'AZURE_SUBSCRIPTION_ID'
+              value: subscription().subscriptionId
+            }
+            {
               name: 'AZURE_TOKEN_CREDENTIALS'
               value: 'managedidentitycredential'
             }
