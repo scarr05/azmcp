@@ -15,7 +15,7 @@ var resourceIdParts = split(logAnalyticsResourceId, '/')
 var resourceGroupName = resourceIdParts[4]
 
 module logAnalyticsRoleAssignment './aca-role-assignment-resource-loganalytics.bicep' = {
-  name: 'aca-role-assignment-loganalytics-${roleDefinitionId}'
+  name: 'aca-rbac-la-${roleDefinitionId}'
   scope: resourceGroup(resourceGroupName)
   params: {
     logAnalyticsResourceId: logAnalyticsResourceId
