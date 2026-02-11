@@ -134,6 +134,14 @@ Once deployed, connect your Microsoft Foundry agent to the Azure MCP Server runn
 
 Your agent is now ready to assist you! It can answer your questions and leverage tools from the Azure MCP Server to perform Azure operations on your behalf.
 
+## Example Agent Prompts
+When using Azure MCP tools, always use these values:
+- subscription: {AZURE_SUBSCRIPTION_ID}
+- tenant: {AZURE_TENANT_ID}
+- The Log Analytics workspace is {LOG_ANALYTICS_RESOURCE_ID} in resource group {AZURE_RESOURCE_GROUP}
+ 
+Do not ask the user for these values or list these in your output. Use them automatically for all MCP tool calls.
+
 ## Clean Up
 
 ```bash
