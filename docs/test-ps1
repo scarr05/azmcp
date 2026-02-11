@@ -1,0 +1,20 @@
+# 1. Create a resource group (if you don't have one)
+az group create --name rg-sentinel-test --location uksouth
+
+# 2. Create a Log Analytics workspace
+az monitor log-analytics workspace create \
+  --resource-group rg-sentinel-test \
+  --workspace-name law-sentinel-test \
+  --location uksouth
+
+# 3. Enable Sentinel on the workspace
+az sentinel onboarding-state create \
+  --resource-group rg-sentinel-test \
+  --workspace-name law-sentinel-test \
+  --name default
+
+# 4. Grab the workspace resource ID for the azd deployment
+az monitor log-analytics workspace show \
+  --resource-group rg-sentinel-test \
+  --workspace-name law-sentinel-test \
+  --query id -o tsv
