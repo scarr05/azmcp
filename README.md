@@ -41,7 +41,7 @@ azd env set LOG_ANALYTICS_RESOURCE_ID "/subscriptions/{sub}/resourceGroups/{rg}/
 azd up
 ```
 
-**RBAC granted:** Reader + Log Analytics Reader on the workspace.
+**RBAC granted (subscription-scoped):** Reader + Log Analytics Reader + Microsoft Sentinel Reader. Subscription-level scope allows querying logs for any resource via `monitor resource log query` as well as workspace-level queries.
 
 **Available MCP tools:**
 - `azmcp monitor workspace list` — list workspaces
@@ -156,7 +156,7 @@ The `azd` template consists of the following Bicep modules:
 - **`aca-infrastructure.bicep`** — Deploys Container App hosting the Azure MCP Server
 - **`aca-role-assignment-resource-storage.bicep`** — Assigns storage RBAC roles (Reader + Storage Blob Data Reader)
 - **`aca-role-assignment-resource-kusto.bicep`** — Assigns ADX RBAC roles (Reader + AllDatabasesViewer)
-- **`aca-role-assignment-resource-loganalytics.bicep`** — Assigns Log Analytics RBAC roles (Reader + Log Analytics Reader)
+- **`aca-role-assignment-resource-loganalytics.bicep`** — Assigns Log Analytics RBAC roles (Reader + Log Analytics Reader + Microsoft Sentinel Reader)
 - **`entra-app.bicep`** — Creates Entra App registration with custom app role for OAuth 2.0 authentication
 - **`foundry-role-assignment-entraapp.bicep`** — Assigns Entra App role to the Foundry project's managed identity
 - **`application-insights.bicep`** — Deploys Application Insights for telemetry and monitoring (conditional)

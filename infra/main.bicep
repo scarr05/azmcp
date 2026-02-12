@@ -122,24 +122,35 @@ module acaKustoReaderRoleAssignment './modules/aca-role-assignment-resource-kust
 }
 
 // --- Monitor / Log Analytics RBAC (when monitor namespace is enabled, e.g. for Sentinel) ---
-// Log Analytics Reader: read-only access to Log Analytics workspace data including Sentinel tables
+// Subscription-scoped so the MCP server can query logs for any resource (monitor resource log query)
+// as well as workspace-level queries (monitor workspace log query).
 var logAnalyticsReaderRoleId = '73c42c96-874c-492b-b04d-ab87d138a893'
+var sentinelReaderRoleId = 'ab8e14d6-4a74-4a29-9ba8-549422addade'
 
-module acaLogAnalyticsReaderRoleAssignment './modules/aca-role-assignment-resource-loganalytics-wrapper.bicep' = if (enableMonitor) {
-  name: 'aca-loganalytics-reader-role-assignment'
+module acaMonitorReaderRoleAssignment './modules/aca-role-assignment-subscription.bicep' = if (enableMonitor) {
+  name: 'aca-monitor-sub-reader'
+  scope: subscription()
   params: {
-    logAnalyticsResourceId: logAnalyticsResourceId
+    acaPrincipalId: acaInfrastructure.outputs.containerAppPrincipalId
+    roleDefinitionId: readerRoleId
+  }
+}
+
+module acaMonitorLogAnalyticsReaderRoleAssignment './modules/aca-role-assignment-subscription.bicep' = if (enableMonitor) {
+  name: 'aca-monitor-sub-la-reader'
+  scope: subscription()
+  params: {
     acaPrincipalId: acaInfrastructure.outputs.containerAppPrincipalId
     roleDefinitionId: logAnalyticsReaderRoleId
   }
 }
 
-module acaLogAnalyticsResourceReaderRoleAssignment './modules/aca-role-assignment-resource-loganalytics-wrapper.bicep' = if (enableMonitor) {
-  name: 'aca-loganalytics-resource-reader-role-assignment'
+module acaMonitorSentinelReaderRoleAssignment './modules/aca-role-assignment-subscription.bicep' = if (enableMonitor) {
+  name: 'aca-monitor-sub-sentinel-reader'
+  scope: subscription()
   params: {
-    logAnalyticsResourceId: logAnalyticsResourceId
     acaPrincipalId: acaInfrastructure.outputs.containerAppPrincipalId
-    roleDefinitionId: readerRoleId
+    roleDefinitionId: sentinelReaderRoleId
   }
 }
 
